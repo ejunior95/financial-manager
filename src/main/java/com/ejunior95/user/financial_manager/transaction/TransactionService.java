@@ -1,5 +1,6 @@
 package com.ejunior95.user.financial_manager.transaction;
 
+import java.math.BigDecimal;
 import java.util.List; // Importamos o "Array" do Java (List)
 import org.springframework.stereotype.Service;
 
@@ -52,5 +53,21 @@ public class TransactionService {
     public List<Transaction> getAllTransactions() {
         // List<Transaction> é o "Transaction[]" ou "Array<Transaction>" do TS
         return transactionRepository.findAll();
+    }
+
+    /**
+     * Lógica de Negócios: Calcular o balanço total (Receitas - Despesas).
+     */
+    public BigDecimal getBalance() {
+        
+        // 1. Chamamos nosso novo método do repositório
+        BigDecimal totalIncome = this.transactionRepository.sumAmountByType(TransactionType.INCOME);
+        
+        // 2. Chamamos o mesmo método para o outro tipo
+        BigDecimal totalExpense = this.transactionRepository.sumAmountByType(TransactionType.EXPENSE);
+
+        // 3. Em Java, para subtrair BigDecimal, usamos o método .subtract()
+        //    (totalIncome - totalExpense)
+        return totalIncome.subtract(totalExpense);
     }
 }

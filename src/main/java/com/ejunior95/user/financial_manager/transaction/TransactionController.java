@@ -1,5 +1,6 @@
 package com.ejunior95.user.financial_manager.transaction;
 
+import java.math.BigDecimal;
 import java.util.List; // O "Array" do Java
 
 // import org.springframework.http.ResponseEntity;
@@ -50,5 +51,15 @@ public class TransactionController {
     @GetMapping // 8. Mapeia este método para o verbo HTTP GET
     public List<Transaction> getAllTransactions() {
         return this.transactionService.getAllTransactions();
+    }
+
+    /**
+     * Endpoint para buscar o balanço geral (Receitas - Despesas).
+     * Rota: GET /transactions/balance
+     */
+    @GetMapping("/balance")
+    public BigDecimal getBalance() {
+        // O Controller só repassa a chamada. A lógica está no Service.
+        return this.transactionService.getBalance();
     }
 }
